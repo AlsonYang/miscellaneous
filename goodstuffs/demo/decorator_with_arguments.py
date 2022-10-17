@@ -6,7 +6,7 @@ def timeit(text): # This is the decorator with arguments
             print(text)
             t1 = datetime.now()
             fn()
-            # print(f'the total time it took was {(datetime.now() - t1).seconds} seconds')
+            print(f'the total time it took to run function `{fn.__name__}`` was {(datetime.now() - t1).seconds} seconds')
         return wrapper
     return decorator
 
