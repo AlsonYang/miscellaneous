@@ -43,7 +43,7 @@ def timeit(f):
 def mysleep(seconds=1):
     time.sleep(seconds)
     return "im awake now"
-# sleep = timeit(sleep, 1, 2)
+# [equivalent] sleep = timeit(sleep, 1, 2)
 
 print(mysleep(1))
 
@@ -55,6 +55,7 @@ class timeit_with_msg:
         self._msg = msg
 
     def __call__(self, f):
+        print('__call__')
         @wraps(f)
         def wrapper(*args, **kwargs):
             print(self._msg)
@@ -64,12 +65,12 @@ class timeit_with_msg:
             return ret
         return wrapper
 
-@timeit_with_msg(msg='I am going to sleep now')
-def mysleep(seconds=1):
+@timeit_with_msg(msg='I am going to sleep now') # trigger __init__()
+def mysleep(seconds=1): # trigger __call__()
     """sleep for n seconds"""
     time.sleep(seconds)
     return "im awake now"
-# sleep = timeit_with_msg(msg='Hi')(sleep)
+# [equivalent] sleep = timeit_with_msg(msg='Hi')(sleep)
 
-print(mysleep(1))
-help(mysleep)
+result = mysleep(1) # trigger wrapper()
+print(result)
